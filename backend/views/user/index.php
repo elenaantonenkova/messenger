@@ -10,36 +10,61 @@ $this->title = 'Users';
 <div class="site-index">
 
     <div class="body-content">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Username</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Register</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php foreach($users as $user) {
-                $model->role = $user->role;
-            ?>
-                <tr>
-                    <th scope="row"><?= $user->username ?></th>
-                    <td><?= $user->email; ?></td>
-                    <td>
-                            
-                        <?php $form = ActiveForm::begin([]); ?>
-                        <?= Html::activeHiddenInput($model, 'id', ['value' => $user->id]) ?>
-                        <?= $form->field($model, 'role')->dropDownList(User::roles())->label(false) ?>
-                        
-                        <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
-                        <?php ActiveForm::end(); ?>
-                    </td>
-                    <td><?= Yii::$app->formatter->asDateTime($user->created_at, 'medium') ?></td>
-                </tr>
-            <?php } ?>
-            </tbody>
-        </table>
 
+<?php
+        echo yii\grid\GridView::widget([
+            'dataProvider' => $dataProvider,
+        //    'filterModel' => new app\models\Page(),
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                [
+                    'attribute' => 'username',
+                    'format' => 'raw',
+                    'filter' => function ($model) {
+                        return $model::roles();
+                    },
+                    'value' => function ($model, $key, $index, $column) {
+                        $admin = $model->role === User::ROLE_ADMIN;
+                        return \yii\helpers\Html::tag(
+                            'span',
+                            $model->username,
+                            [
+                                'class' => 'label label-' . ($admin ? 'danger' : 'success'),
+                            ]
+                        );
+
+                    }
+                ],
+                'email',
+                'created_at:datetime:Register',
+                [
+                    'attribute' => 'role',
+                    'format' => 'raw',
+                    'filter' => function ($model) {
+                        return $model::roles();
+                    },
+                    'filterInputOptions' => [
+                        'class' => 'form-control',
+                        'prompt' => 'Select'
+                    ],
+                    'value' => function ($model, $key) {
+                        return Html::dropDownList('role', $model->role, $model::roles(),
+                            ['onchange' => "
+                                $.ajax({
+                                    url: \"index\",
+                                    type: \"post\",
+                                    data: {id: $model->id, role: $(this).val()}, 
+                                    success: function(res){
+                                        console.log(res);
+                                    },
+                                });"
+                            ]
+                        );
+                    }
+                ],
+            ],
+        ]);
+?>
+       
     </div>
 </div>

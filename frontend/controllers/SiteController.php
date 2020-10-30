@@ -75,7 +75,7 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {//echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>"; exit();
+    {
         $user = Yii::$app->user->getIdentity();
 
         if ($user && $user->isAdmin()) {
