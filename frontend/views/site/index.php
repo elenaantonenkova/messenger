@@ -11,7 +11,7 @@ use common\models\Message;
 $this->title = 'Messenger';
 ?>
 <div class="site-index">
-    <div class="message" style="margin: 0 200px">
+    <div class="message">
     <?php
     foreach ($messages as $message) {
     ?>
