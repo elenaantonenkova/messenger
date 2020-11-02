@@ -11,7 +11,7 @@ use common\models\Message;
 $this->title = 'Messenger';
 ?>
 <div class="site-index">
-    <div class="message" style="margin: 0 200px">
+    <div class="message">
     <?php
     foreach ($messages as $message) {
     ?>
@@ -28,7 +28,7 @@ $this->title = 'Messenger';
                     if ($message->isCorrect()) {
                         echo "<div style='padding: 10px 20px; border-radius: 10px; border: 1px solid #9d9d9d'>" . $message->text . "</div>";
                     } else {
-                        echo "<div style='padding: 10px 20px; border-radius: 10px; border: 1px solid #de5f66'>" . $message->text . "</div>";
+                        echo "<div style='padding: 10px 20px; border-radius: 10px; border: 1px solid #f0ad4e'>" . $message->text . "</div>";
                     }
                 ?>
                 <div class="pull-right" style="margin: 4px 0 0 20px">
