@@ -14,7 +14,6 @@ $this->title = 'Users';
 <?php
         echo yii\grid\GridView::widget([
             'dataProvider' => $dataProvider,
-        //    'filterModel' => new app\models\Page(),
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 [

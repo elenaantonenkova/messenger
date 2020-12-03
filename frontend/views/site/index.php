@@ -26,9 +26,9 @@ $this->title = 'Messenger';
                 ?>
                 <?php
                     if ($message->isCorrect()) {
-                        echo "<div style='padding: 10px 20px; border-radius: 10px; border: 1px solid #9d9d9d'>" . $message->text . "</div>";
+                        echo "<div style='padding: 10px 20px; border-radius: 10px; border: 1px solid #9d9d9d'>" . $message->revertCharacters() . "</div>";
                     } else {
-                        echo "<div style='padding: 10px 20px; border-radius: 10px; border: 1px solid #f0ad4e'>" . $message->text . "</div>";
+                        echo "<div style='padding: 10px 20px; border-radius: 10px; border: 1px solid #f0ad4e'>" . $message->revertCharacters() . "</div>";
                     }
                 ?>
                 <div class="pull-right" style="margin: 4px 0 0 20px">
